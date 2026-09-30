@@ -2,7 +2,7 @@
 :root {
   --bg: #ffffff;
   --ink: #000000;
-  --accent: #d9cde3;       /* logo lavender — used for about / contact */
+  --accent: #b8a3cc;       /* slightly darker than the logo lavender (#d9cde3) — about / contact */
   --muted: #777777;
   --rule: #000000;
   --font: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
@@ -42,6 +42,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   padding: 1px 6px; margin-left: -6px;   /* keeps the word aligned with the edge */
   color: var(--accent);
   font-size: 15px;
+  font-weight: 700;
 }
 .side-nav button:hover,
 .side-nav button:focus-visible,
@@ -128,6 +129,23 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .info-toggle[aria-expanded="true"] { background: var(--ink); color: var(--bg); }
 .buy:hover { background: var(--ink); color: var(--bg); }
 
+/* ---------- Newsletter pop-up ---------- */
+.nl-popup {
+  position: fixed; right: 24px; bottom: 24px; z-index: 50;
+  width: min(360px, calc(100vw - 32px));
+  background: var(--bg); border: 1px solid var(--ink);
+  padding: 20px 20px 18px;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity .3s ease, transform .3s ease;
+}
+.nl-popup.visible { opacity: 1; transform: none; }
+.nl-popup p { margin: 0 24px 12px 0; }
+.nl-close {
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: 0; font-size: 18px; line-height: 1; padding: 4px 6px;
+}
+.nl-close:hover { background: var(--ink); color: var(--bg); }
+
 /* ---------- Phones / narrow screens: stack ---------- */
 @media (max-width: 760px) {
   .side {
@@ -139,4 +157,5 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .pane { max-width: none; }
   .books { margin-left: 0; padding: 24px 16px 80px; }
   .arrow { opacity: .7; }
+  .nl-popup { right: 16px; bottom: 16px; }
 }

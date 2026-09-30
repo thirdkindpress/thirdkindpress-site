@@ -72,3 +72,35 @@ document.querySelectorAll('.viewer').forEach(viewer => {
 
   show(0);
 });
+
+// ---- Newsletter pop-up: appears once after 10 seconds ----
+// Won't reappear for 30 days after someone closes it or signs up.
+(() => {
+  const DELAY_MS = 10000;
+  const KEY = 'tkp-newsletter-popup';
+  const popup = document.getElementById('nl-popup');
+  if (!popup) return;
+
+  const recentlySeen = () => {
+    try { return Date.now() - Number(localStorage.getItem(KEY) || 0) < 30 * 864e5; }
+    catch (e) { return false; }
+  };
+  const remember = () => { try { localStorage.setItem(KEY, String(Date.now())); } catch (e) {} };
+  const close = () => {
+    popup.classList.remove('visible');
+    setTimeout(() => { popup.hidden = true; }, 300);
+    remember();
+  };
+
+  if (recentlySeen()) return;
+  setTimeout(() => {
+    // Skip it if the contact panel (which already has the signup) is open.
+    if (!document.getElementById('pane-contact').hidden) return;
+    popup.hidden = false;
+    requestAnimationFrame(() => popup.classList.add('visible'));
+  }, DELAY_MS);
+
+  popup.querySelector('.nl-close').addEventListener('click', close);
+  popup.querySelector('form').addEventListener('submit', remember);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !popup.hidden) close(); });
+})();
