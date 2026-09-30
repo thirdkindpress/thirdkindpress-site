@@ -35,7 +35,7 @@ document.addEventListener('click', e => { if (!menu.contains(e.target)) openPane
 document.querySelectorAll('.viewer').forEach(viewer => {
   const slides = [...viewer.querySelectorAll('.slide')];
   const count = viewer.querySelector('.count');
-  const infoBtn = viewer.querySelector('.info-toggle');
+  const infoBtn = viewer.closest('.book').querySelector('.info-toggle');
   let i = 0;
 
   const show = n => {
@@ -46,11 +46,19 @@ document.querySelectorAll('.viewer').forEach(viewer => {
 
   viewer.querySelector('.prev').addEventListener('click', () => show(i - 1));
   viewer.querySelector('.next').addEventListener('click', () => show(i + 1));
-  infoBtn.addEventListener('click', () => {
-    const on = viewer.classList.toggle('show-info');
+  const setInfo = on => {
+    viewer.classList.toggle('show-info', on);
     infoBtn.setAttribute('aria-expanded', on);
-    infoBtn.textContent = on ? 'close' : 'info';
-  });
+  };
+  // Desktop: info shows while the mouse is over the button. Touch: tap to toggle.
+  if (canHover) {
+    infoBtn.addEventListener('mouseenter', () => setInfo(true));
+    infoBtn.addEventListener('mouseleave', () => setInfo(false));
+    infoBtn.addEventListener('focus', () => setInfo(true));
+    infoBtn.addEventListener('blur', () => setInfo(false));
+  } else {
+    infoBtn.addEventListener('click', () => setInfo(!viewer.classList.contains('show-info')));
+  }
 
   // swipe on phones
   let x0 = null;
