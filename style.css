@@ -42,7 +42,6 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   padding: 1px 6px; margin-left: -6px;   /* keeps the word aligned with the edge */
   color: var(--accent);
   font-size: 15px;
-  font-weight: 700;
 }
 .side-nav button:hover,
 .side-nav button:focus-visible,
@@ -148,6 +147,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 
 /* ---------- Phones / narrow screens: stack ---------- */
 @media (max-width: 760px) {
+  .side-nav button { font-weight: 700; }
   .side {
     position: relative; width: auto; padding: 16px;
     border-right: 0; border-bottom: 1px solid var(--rule);
