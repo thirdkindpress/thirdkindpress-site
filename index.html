@@ -119,6 +119,17 @@
 
   </main>
 
+  <!-- ============ Newsletter pop-up (appears after 15 s; see script.js) ============ -->
+  <div class="nl-popup" id="nl-popup" role="dialog" aria-labelledby="nl-popup-text" hidden>
+    <button class="nl-close" type="button" aria-label="close">×</button>
+    <p id="nl-popup-text">Stay in touch? Sign up for our occasional newsletter here:</p>
+    <form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/thirdkindpress" method="post">
+      <label class="visually-hidden" for="nl-popup-email">email address</label>
+      <input id="nl-popup-email" type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit">sign up</button>
+    </form>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
