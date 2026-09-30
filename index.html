@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>third kind press</title>
+  <meta name="description" content="third kind press is a fledgling publisher of small art books.">
+  <link rel="icon" href="logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============ LEFT: fixed column ============ -->
+  <aside class="side">
+    <div class="menu">
+      <nav class="side-nav">
+        <button type="button" data-pane="about" aria-expanded="false" aria-controls="pane-about">about</button>
+        <button type="button" data-pane="contact" aria-expanded="false" aria-controls="pane-contact">contact</button>
+      </nav>
+
+      <section class="pane" id="pane-about" hidden>
+        <p><em>third kind press</em> is a fledgling publisher of small art books.</p>
+        <p>
+          We take seriously human expressions of radical vulnerability, recalcitrance even,
+          and the unnamable ache and abstract intuition that such expressions can manifest.
+          We open spaces for betweenness, reinvention, and community by bringing collections
+          of art from artists across mediums into the material world in the form of printed matter.
+        </p>
+        <!-- Paste the four lyric lines here, with <br> at the end of each line except the last. -->
+        <blockquote class="epigraph"><em>But if you have a need of which you can't dеscribe // A feeling of the third kind // That's my specialty, that's еasy // We can draw up the plans, of a new design</em></blockquote>
+        <p class="attr">— Buck Meek,
+          <a href="https://youtu.be/GYeZPs83hQo?si=Lcagg6pTzeobOn6o&amp;t=109" target="_blank" rel="noopener"><em>Second Sight</em></a>
+        </p>
+      </section>
+
+      <section class="pane" id="pane-contact" hidden>
+        <p>Reach out. Maybe we can work together.</p>
+        <p><a href="mailto:peter@thirdkindpress.com">peter@thirdkindpress.com</a></p>
+        <p>Sign up for our occasional email newsletter:</p>
+        <!-- Replace YOUR_BUTTONDOWN_USERNAME after creating a free Buttondown account (see README). -->
+        <form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/thirdkindpress" method="post">
+          <label class="visually-hidden" for="signup-email">email address</label>
+          <input id="signup-email" type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <button type="submit">sign up</button>
+        </form>
+      </section>
+    </div>
+
+    <a class="logo" href="#top" aria-label="third kind press — back to top">
+      <img src="logo.svg" alt="third kind press">
+    </a>
+  </aside>
+
+  <!-- ============ RIGHT: scrolling book entries ============ -->
+  <main class="books" id="top">
+
+    <!-- ---- BOOK ENTRY: copy this whole <article> block for each new book ---- -->
+    <article class="book">
+      <h2 class="book-title"><span>01</span> — Book Title — Artist Name</h2>
+      <div class="viewer">
+        <div class="slides">
+          <!-- Replace placeholders with: <img class="slide" src="images/01-1.jpg" alt="Spread 1"> -->
+          <div class="slide ph">spread 1</div>
+          <div class="slide ph">spread 2</div>
+          <div class="slide ph">spread 3</div>
+        </div>
+        <button class="arrow prev" type="button" aria-label="previous image">←</button>
+        <button class="arrow next" type="button" aria-label="next image">→</button>
+        <button class="info-toggle" type="button" aria-expanded="false">info</button>
+        <div class="info">
+          <p>A short description of the book.</p>
+          <dl>
+            <dt>Edition</dt><dd>100 copies</dd>
+            <dt>Pages</dt><dd>48</dd>
+            <dt>Size</dt><dd>6 × 8 in</dd>
+            <dt>Binding</dt><dd>Softcover, sewn</dd>
+            <dt>Price</dt><dd>$30</dd>
+          </dl>
+        </div>
+        <span class="count"></span>
+      </div>
+      <div class="book-foot">
+        <!-- Point this at a Stripe Payment Link / shop link later -->
+        <a class="buy" href="mailto:peter@thirdkindpress.com?subject=Order:%2001">buy</a>
+      </div>
+    </article>
+
+    <article class="book">
+      <h2 class="book-title"><span>02</span> — Second Title — Second Artist</h2>
+      <div class="viewer">
+        <div class="slides">
+          <div class="slide ph">spread 1</div>
+          <div class="slide ph">spread 2</div>
+        </div>
+        <button class="arrow prev" type="button" aria-label="previous image">←</button>
+        <button class="arrow next" type="button" aria-label="next image">→</button>
+        <button class="info-toggle" type="button" aria-expanded="false">info</button>
+        <div class="info">
+          <p>A short description of the book.</p>
+          <dl>
+            <dt>Edition</dt><dd>50 copies</dd>
+            <dt>Price</dt><dd>$25</dd>
+          </dl>
+        </div>
+        <span class="count"></span>
+      </div>
+      <div class="book-foot">
+        <a class="buy" href="mailto:peter@thirdkindpress.com?subject=Order:%2002">buy</a>
+      </div>
+    </article>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
