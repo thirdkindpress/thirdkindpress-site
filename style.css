@@ -157,7 +157,6 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action
 
 /* ---------- Phones / narrow screens: stack ---------- */
 @media (max-width: 760px) {
-  .side-nav button { font-weight: 700; }
   .side {
     position: relative; width: auto; padding: 16px;
   }
