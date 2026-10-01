@@ -19,7 +19,7 @@ body {
 }
 a { color: inherit; }
 button, input { font: inherit; color: inherit; }
-button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 .visually-hidden {
   position: absolute; width: 1px; height: 1px; overflow: hidden;
   clip: rect(0 0 0 0); white-space: nowrap;
@@ -36,13 +36,14 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 }
 .menu { display: flex; flex-direction: column; min-height: 0; flex: 0 1 auto; }
 
-.side-nav { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; }
+.side-nav { display: flex; flex-direction: row; align-items: flex-start; gap: 10px; }  /* side by side on desktop */
 .side-nav button {
   background: none; border: 0;
-  padding: 1px 6px; margin-left: -6px;   /* keeps the word aligned with the edge */
+  padding: 1px 6px;
   color: var(--accent);
   font-size: 15px;
 }
+.side-nav button:first-child { margin-left: -6px; }   /* keeps the first word aligned with the edge */
 .side-nav button:hover,
 .side-nav button:focus-visible,
 .side-nav button[aria-expanded="true"] { background: var(--ink); color: var(--bg); outline: none; }
@@ -56,6 +57,8 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   min-height: 0;
 }
 .pane p { margin: 0 0 1em; }
+.pane p.tight { margin-bottom: 0; }
+.name-mark { background: var(--ink); color: var(--bg); padding: 0 .25em; }
 .pane > :last-child { margin-bottom: 0; }
 .epigraph { margin: 1.4em 0 .6em; padding-left: 1.2em; font-style: normal; }
 .attr { padding-left: 1.2em; }
@@ -78,7 +81,7 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   margin-left: 33.333vw;
   padding: 28px 6vw 20vh;
 }
-.book { padding: 0 0 56px; margin-bottom: 56px; border-bottom: 1px solid var(--rule); }
+.book { padding: 0 0 56px; margin-bottom: 56px; }
 .book-title { font-size: 14px; font-weight: 400; margin: 0 0 20px; }
 
 .viewer { position: relative; aspect-ratio: 3 / 2; background: var(--bg); overflow: hidden; }
@@ -86,19 +89,25 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .slide {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: contain;
-  opacity: 0; transition: opacity .35s ease;
+  opacity: 0;
 }
 .slide.active { opacity: 1; }
 .slide.ph { display: grid; place-items: center; color: var(--muted); border: 1px solid #ddd; }
 
+/* Left / right halves of the image are the click areas; the cursor becomes an arrow. */
 .arrow {
-  position: absolute; top: 0; bottom: 0; width: 18%;
-  background: none; border: 0; font-size: 20px;
-  opacity: 0; transition: opacity .2s;
+  position: absolute; top: 0; bottom: 0; width: 50%; z-index: 1;
+  background: none; border: 0; padding: 0;
 }
-.viewer:hover .arrow, .arrow:focus-visible { opacity: .8; }
-.prev { left: 0; text-align: left; padding-left: 16px; }
-.next { right: 0; text-align: right; padding-right: 16px; }
+.prev {
+  left: 0;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 32 32'%3E%3Cpath d='M26 16H7M14 8l-8 8 8 8' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='square'/%3E%3Cpath d='M26 16H7M14 8l-8 8 8 8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E") 4 11, w-resize;
+}
+.next {
+  right: 0;
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='22' height='22' viewBox='0 0 32 32'%3E%3Cpath d='M6 16h19M18 8l8 8-8 8' fill='none' stroke='%23fff' stroke-width='5' stroke-linecap='square'/%3E%3Cpath d='M6 16h19M18 8l8 8-8 8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square'/%3E%3C/svg%3E") 18 11, e-resize;
+}
+.arrow:focus-visible { outline: 1px solid var(--ink); outline-offset: -4px; }
 
 .info {
   position: absolute; inset: 0; z-index: 2;
@@ -113,18 +122,19 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
 .info dl { display: grid; grid-template-columns: max-content 1fr; gap: 4px 24px; margin: 0; }
 .info dt { color: var(--muted); }
 .info dd { margin: 0; }
+.info a { color: inherit; }
 
 .count { display: none; }
 
-.book-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; }
+.book-foot { display: flex; justify-content: flex-end; gap: 12px; align-items: center; margin-top: 14px; }
 .info-toggle,
 .buy {
   background: var(--bg); color: var(--ink);
   border: 1px solid var(--ink);
-  padding: 3px 18px; text-transform: uppercase; letter-spacing: .06em;
+  padding: 3px 18px; letter-spacing: .06em;
   font-size: 14px; line-height: 1.55; text-decoration: none;
 }
-.info-toggle:hover,
+.buy { text-transform: uppercase; }
 .info-toggle[aria-expanded="true"] { background: var(--ink); color: var(--bg); }
 .buy:hover { background: var(--ink); color: var(--bg); }
 
@@ -150,12 +160,17 @@ button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
   .side-nav button { font-weight: 700; }
   .side {
     position: relative; width: auto; padding: 16px;
-    border-right: 0; border-bottom: 1px solid var(--rule);
   }
   .logo { position: absolute; top: 14px; right: 16px; margin: 0; padding: 0; width: 80px; }
-  .side-nav { min-height: 72px; }
+  .side-nav { flex-direction: column; gap: 2px; height: 80px; margin-top: -2px; justify-content: center; }  /* stacked, centred against the logo */
+  .side-nav button { margin-left: -6px; }
   .pane { max-width: none; }
   .books { margin-left: 0; padding: 24px 16px 80px; }
-  .arrow { opacity: .7; }
+  .signup input { font-size: 16px; }   /* stops iPhones zooming into the email box */
+  /* Info on phones: tighter, and the frame grows if the text needs more room */
+  .info { padding: 16px; font-size: 13px; line-height: 1.45; }
+  .viewer.show-info { aspect-ratio: auto; min-height: calc((100vw - 32px) * 2 / 3); }
+  .viewer.show-info .info { position: relative; inset: auto; overflow: visible; min-height: calc((100vw - 32px) * 2 / 3); background: var(--bg); }
+  .info dl { gap: 3px 14px; }
   .nl-popup { right: 16px; bottom: 16px; }
 }

@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>third kind press</title>
-  <meta name="description" content="third kind press is a fledgling publisher of little art books.">
+  <meta name="description" content="third kind press is a fledgling publisher of art books.">
   <link rel="icon" href="logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,23 +22,22 @@
       </nav>
 
       <section class="pane" id="pane-about" hidden>
-        <p><em>third kind press</em> is a fledgling publisher of little art books.</p>
+        <p><em class="name-mark">third kind press</em> is a fledgling publisher of art books.</p>
         <p>
-          We take seriously human expressions of radical vulnerability
-          and the abstract intuition that such expressions can manifest.
-          We open spaces for betweenness, reinvention, and community by bringing collections
-          of art from artists across mediums into the material world in the form of printed matter.
+          We take seriously human expressions of radical vulnerability and the abstract intuition
+          that such expressions can elicit. We open spaces for betweenness, reinvention, and community
+          by bringing collections of contemporary art works from artists across mediums into the
+          physical world in the form of books.
         </p>
         <!-- Paste the four lyric lines here, with <br> at the end of each line except the last. -->
         <blockquote class="epigraph"><em>But if you have a need of which you can't dеscribe // A feeling of the third kind // That's my specialty, that's еasy // We can draw up the plans, of a new design</em></blockquote>
-        <p class="attr">— Buck Meek,
-          <a href="https://youtu.be/GYeZPs83hQo?si=Lcagg6pTzeobOn6o&amp;t=109" target="_blank" rel="noopener"><em>Second Sight</em></a>
-        </p>
+        <p class="attr">— Buck Meek “<a href="https://youtu.be/GYeZPs83hQo?si=Lcagg6pTzeobOn6o&amp;t=109" target="_blank" rel="noopener">Second Sight</a>”</p>
       </section>
 
       <section class="pane" id="pane-contact" hidden>
-        <p>Reach out. Maybe we can work together.</p>
-        <p><a href="mailto:peter@thirdkindpress.com">peter@thirdkindpress.com</a></p>
+        <p class="tight">Reach out. Maybe we can work together.</p>
+        <p><a href="mailto:peter@thirdkindpress.com">peter@thirdkindpress.com</a><br>
+          <a href="https://www.instagram.com/thirdkindpress/" target="_blank" rel="noopener">@thirdkindpress</a></p>
         <p>Sign up for our occasional newsletter:</p>
         <!-- Replace YOUR_BUTTONDOWN_USERNAME after creating a free Buttondown account (see README). -->
         <form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/thirdkindpress" method="post">
@@ -69,17 +68,15 @@
           <img class="slide" src="images/mika_4.jpg" alt="Spread 4">
           <img class="slide" src="images/mika_5.jpg" alt="Spread 5">
         </div>
-        <button class="arrow prev" type="button" aria-label="previous image">←</button>
-        <button class="arrow next" type="button" aria-label="next image">→</button>
+        <button class="arrow prev" type="button" aria-label="previous image"></button>
+        <button class="arrow next" type="button" aria-label="next image"></button>
         <div class="info">
-          <p><em>tantarant&aacute;n</em> is an exhibition booklet of art by Mika Rane</p>
+          <p><em>tantarant&aacute;n</em> is an exhibition booklet of art by <a href="https://mikarane.com" target="_blank" rel="noopener">Mika Rane</a></p>
           <dl>
             <dt>Year</dt><dd>2026</dd>
-            <dt>Edition</dt><dd>75 copies</dd>
-            <dt>Pages</dt><dd>46</dd>
-            <dt>Size</dt><dd>8 × 10 in</dd>
+            <dt>Specs</dt><dd>Edition of 75, 46pp, 31 works, 8x10 inches</dd>
             <dt>Price</dt><dd>$20</dd>
-            <dt>Want one?</dt><dd>Reach out on our about page to purchase</dd>
+            <dt>Want one?</dt><dd>Reach out to purchase a copy</dd>
           </dl>
         </div>
         <span class="count"></span>
@@ -102,8 +99,8 @@
           <div class="slide ph">spread 1</div>
           <div class="slide ph">spread 2</div>
         </div>
-        <button class="arrow prev" type="button" aria-label="previous image">←</button>
-        <button class="arrow next" type="button" aria-label="next image">→</button>
+        <button class="arrow prev" type="button" aria-label="previous image"></button>
+        <button class="arrow next" type="button" aria-label="next image"></button>
         <div class="info">
           <p>A short description of the book.</p>
           <dl>
@@ -125,7 +122,7 @@
   <!-- ============ Newsletter pop-up (appears after 10 s; see script.js) ============ -->
   <div class="nl-popup" id="nl-popup" role="dialog" aria-labelledby="nl-popup-text" hidden>
     <button class="nl-close" type="button" aria-label="close">×</button>
-    <p id="nl-popup-text">Stay in touch? Sign up for our occasional newsletter here:</p>
+    <p id="nl-popup-text">Stay in touch? Sign up for our occasional newsletter:</p>
     <form class="signup" action="https://buttondown.com/api/emails/embed-subscribe/thirdkindpress" method="post">
       <label class="visually-hidden" for="nl-popup-email">email address</label>
       <input id="nl-popup-email" type="email" name="email" placeholder="your@email.com" required autocomplete="email">

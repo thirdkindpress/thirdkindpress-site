@@ -31,34 +31,36 @@ if (canHover) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') openPane(null); });
 document.addEventListener('click', e => { if (!menu.contains(e.target)) openPane(null); });
 
-// ---- Each book: image carousel + info overlay ----
+// ---- Each book: image carousel + info panel ----
+// Images advance on their own every 6.5 seconds (no transition) until the visitor
+// clicks, taps, swipes or uses the arrow keys — then auto-advance stops for good.
+const AUTOPLAY_MS = 6500;
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 document.querySelectorAll('.viewer').forEach(viewer => {
   const slides = [...viewer.querySelectorAll('.slide')];
   const count = viewer.querySelector('.count');
-  const infoBtn = viewer.closest('.book').querySelector('.info-toggle');
+  const book = viewer.closest('.book');
+  const infoBtn = book.querySelector('.info-toggle');
   let i = 0;
+  let timer = null;
 
   const show = n => {
     i = (n + slides.length) % slides.length;
     slides.forEach((s, k) => s.classList.toggle('active', k === i));
-    count.textContent = slides.length > 1 ? `${i + 1} / ${slides.length}` : '';
+    if (count) count.textContent = slides.length > 1 ? `${i + 1} / ${slides.length}` : '';
   };
+  const stopAuto = () => {
+    clearInterval(timer); timer = null;
+  };
+  const step = d => { stopAuto(); show(i + d); };
 
-  viewer.querySelector('.prev').addEventListener('click', () => show(i - 1));
-  viewer.querySelector('.next').addEventListener('click', () => show(i + 1));
-  const setInfo = on => {
-    viewer.classList.toggle('show-info', on);
-    infoBtn.setAttribute('aria-expanded', on);
-  };
-  // Desktop: info shows while the mouse is over the button. Touch: tap to toggle.
-  if (canHover) {
-    infoBtn.addEventListener('mouseenter', () => setInfo(true));
-    infoBtn.addEventListener('mouseleave', () => setInfo(false));
-    infoBtn.addEventListener('focus', () => setInfo(true));
-    infoBtn.addEventListener('blur', () => setInfo(false));
-  } else {
-    infoBtn.addEventListener('click', () => setInfo(!viewer.classList.contains('show-info')));
-  }
+  viewer.querySelector('.prev').addEventListener('click', () => step(-1));
+  viewer.querySelector('.next').addEventListener('click', () => step(1));
+  viewer.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') step(-1);
+    if (e.key === 'ArrowRight') step(1);
+  });
 
   // swipe on phones
   let x0 = null;
@@ -66,11 +68,28 @@ document.querySelectorAll('.viewer').forEach(viewer => {
   viewer.addEventListener('touchend', e => {
     if (x0 === null) return;
     const dx = e.changedTouches[0].clientX - x0;
-    if (Math.abs(dx) > 40) show(i + (dx < 0 ? 1 : -1));
+    if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
     x0 = null;
   });
 
+  // Info: click (or tap) to open; any click after that — on the panel or elsewhere — closes it.
+  const setInfo = on => {
+    viewer.classList.toggle('show-info', on);
+    infoBtn.setAttribute('aria-expanded', on);
+  };
+  infoBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    setInfo(!viewer.classList.contains('show-info'));
+  });
+  document.addEventListener('click', () => setInfo(false));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') setInfo(false); });
+
   show(0);
+  if (slides.length > 1 && !reduceMotion) {
+    timer = setInterval(() => {
+      if (!viewer.classList.contains('show-info') && !document.hidden) show(i + 1);
+    }, AUTOPLAY_MS);
+  }
 });
 
 // ---- Newsletter pop-up: appears once after 10 seconds ----
