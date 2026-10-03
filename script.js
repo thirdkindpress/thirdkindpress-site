@@ -1,9 +1,12 @@
 // ---- About / contact ----
-// Desktop (mouse): hovering a word opens its panel; leaving the whole menu area closes it.
+// Desktop (mouse): hovering a word previews its panel; leaving the menu area closes it.
+//   Clicking a word "pins" its panel so it stays open. Click the same word again,
+//   click anywhere outside the menu, or press Esc to close it.
 // Touch screens: tap to open, tap again to close.
 const menu = document.querySelector('.menu');
 const navButtons = [...document.querySelectorAll('.side-nav button')];
 const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+let pinned = null;   // name of the panel that was clicked open, if any
 
 function openPane(name) {
   navButtons.forEach(b => {
@@ -12,24 +15,29 @@ function openPane(name) {
     document.getElementById('pane-' + b.dataset.pane).hidden = !on;
   });
 }
+function closeAll() { pinned = null; openPane(null); }
 
 navButtons.forEach(btn => {
-  if (canHover) btn.addEventListener('mouseenter', () => openPane(btn.dataset.pane));
-  if (canHover) btn.addEventListener('focus', () => openPane(btn.dataset.pane));
+  const name = btn.dataset.pane;
+  if (canHover) btn.addEventListener('mouseenter', () => openPane(name));
   btn.addEventListener('click', () => {
-    const isOpen = btn.getAttribute('aria-expanded') === 'true';
-    if (!canHover) openPane(isOpen ? null : btn.dataset.pane);
+    if (pinned === name) { closeAll(); return; }   // second click closes
+    pinned = name;
+    openPane(name);
   });
 });
 
 if (canHover) {
-  // Close when the mouse leaves — unless someone is typing in the signup box.
+  // Leaving the menu: go back to the pinned panel (if any) — otherwise close,
+  // unless someone is typing in the signup box.
   menu.addEventListener('mouseleave', () => {
-    if (!menu.contains(document.activeElement) || document.activeElement.tagName === 'BUTTON') openPane(null);
+    if (pinned) { openPane(pinned); return; }
+    const typing = menu.contains(document.activeElement) && document.activeElement.tagName === 'INPUT';
+    if (!typing) openPane(null);
   });
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') openPane(null); });
-document.addEventListener('click', e => { if (!menu.contains(e.target)) openPane(null); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+document.addEventListener('click', e => { if (!menu.contains(e.target)) closeAll(); });
 
 // ---- Each book: image carousel + info panel ----
 // Images advance on their own every 6.5 seconds (no transition) until the visitor
